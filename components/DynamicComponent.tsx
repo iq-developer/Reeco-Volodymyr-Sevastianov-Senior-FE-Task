@@ -12,6 +12,8 @@ const DynamicComponent: React.FC<DynamicComponentProps> = ({ props }) => {
     null
   );
 
+  console.log('props:', props);
+
   useEffect(() => {
     const loadComponent = async () => {
       try {
@@ -26,8 +28,13 @@ const DynamicComponent: React.FC<DynamicComponentProps> = ({ props }) => {
     loadComponent();
   }, [props.componentName]);
 
+  // this part is
   if (!Component) {
-    return <div>Component not found</div>;
+    return (
+      <div className="border bg-slate-100 border border-white text-slate-900 w-32 p-6 h-full flex items-center justify-center">
+        Component not found
+      </div>
+    );
   }
 
   return (

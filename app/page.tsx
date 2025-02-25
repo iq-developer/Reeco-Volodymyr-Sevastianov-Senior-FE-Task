@@ -1,5 +1,4 @@
 import Slider from '../components/Slider';
-import DynamicComponent from '../components/DynamicComponent';
 
 export default function Home() {
   const data = [
@@ -13,21 +12,26 @@ export default function Home() {
     {
       componentName: 'Chip',
       category: 'Fresh Produce',
+      color: 'bg-orange-200 text-orange-900',
     },
     {
       componentName: 'Chip',
       category: 'Beverage',
+      color: 'bg-green-200 text-green-900',
     },
     {
       componentName: 'Chip',
       category: 'Another category',
+      color: 'bg-rose-200 text-rose-900',
     },
+    // {
+    //   broken: 'something goes wrong',
+    // },
   ];
 
   return (
-    <div>
-      <DynamicComponent props={data[1]} />
-      {/* <Slider data={data} /> */}
+    <div className="p-2">
+      <Slider items={data} />
     </div>
   );
 }

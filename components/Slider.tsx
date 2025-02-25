@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import DynamicComponent from './DynamicComponent';
 
 interface SliderProps {
   items: any[];
@@ -30,10 +31,23 @@ const Slider: React.FC<SliderProps> = ({
   };
 
   return (
-    <div className={`slider ${orientation}`}>
-      {currentIndex > 0 && <button onClick={handlePrev}>Prev</button>}
+    <div
+      className={`relative overflow-hidden w-full h-full ${
+        orientation === 'horizontal' ? 'flex-row' : 'flex-col'
+      }`}
+    >
+      {currentIndex > 0 && (
+        <button
+          onClick={handlePrev}
+          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white border-none p-2 cursor-pointer left-2"
+        >
+          Prev
+        </button>
+      )}
       <div
-        className="slider-content"
+        className={`flex transition-transform duration-300 ease-in-out border-2 border-gray-200 ${
+          orientation === 'horizontal' ? 'flex-row' : 'flex-col'
+        }`}
         style={{
           transform: `translate${orientation === 'horizontal' ? 'X' : 'Y'}(-${
             currentIndex * (moveByItem ? 100 : moveByPixels)
@@ -41,13 +55,21 @@ const Slider: React.FC<SliderProps> = ({
         }}
       >
         {items.map((item, index) => (
-          <div key={index} className="slider-item">
-            {item}
+          <div
+            key={index}
+            className="min-w-[100px] min-h-[100px] max-h-[200px]"
+          >
+            <DynamicComponent props={item} />
           </div>
         ))}
       </div>
       {currentIndex < items.length - 1 && (
-        <button onClick={handleNext}>Next</button>
+        <button
+          onClick={handleNext}
+          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white border-none p-2 cursor-pointer right-2"
+        >
+          Next
+        </button>
       )}
     </div>
   );
