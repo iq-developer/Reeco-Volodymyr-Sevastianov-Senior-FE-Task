@@ -32,33 +32,30 @@ const Slider: React.FC<SliderProps> = ({
 
   return (
     <div
-      className={`relative overflow-hidden w-full h-full ${
+      className={`relative overflow-hidden w-full h-full w-1/2 border border-blue-300  ${
         orientation === 'horizontal' ? 'flex-row' : 'flex-col'
       }`}
     >
       {currentIndex > 0 && (
         <button
           onClick={handlePrev}
-          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white border-none p-2 cursor-pointer left-2"
+          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white border-none p-2 cursor-pointer left-1 z-10"
         >
           Prev
         </button>
       )}
       <div
-        className={`flex transition-transform duration-300 ease-in-out border-2 border-gray-200 ${
+        className={`flex transition-transform duration-300 ease-in-out border border-gray-400 ${
           orientation === 'horizontal' ? 'flex-row' : 'flex-col'
         }`}
         style={{
           transform: `translate${orientation === 'horizontal' ? 'X' : 'Y'}(-${
-            currentIndex * (moveByItem ? 100 : moveByPixels)
+            currentIndex * (moveByItem ? 130 : moveByPixels)
           }px)`,
         }}
       >
         {items.map((item, index) => (
-          <div
-            key={index}
-            className="min-w-[100px] min-h-[100px] max-h-[200px]"
-          >
+          <div key={index} className="w-[200px] min-h-[200px]">
             <DynamicComponent props={item} />
           </div>
         ))}
@@ -66,11 +63,13 @@ const Slider: React.FC<SliderProps> = ({
       {currentIndex < items.length - 1 && (
         <button
           onClick={handleNext}
-          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white border-none p-2 cursor-pointer right-2"
+          className="absolute top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white border-none p-2 cursor-pointer right-1 z-10"
         >
           Next
         </button>
       )}
+
+      {currentIndex}
     </div>
   );
 };
