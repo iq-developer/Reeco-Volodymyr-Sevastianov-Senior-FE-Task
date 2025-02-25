@@ -1,29 +1,33 @@
 import Slider from '../components/Slider';
-import ProductCard from '../components/ProductCard';
-import Chip from '../components/Chip';
+import DynamicComponent from '../components/DynamicComponent';
 
 export default function Home() {
   const data = [
+    // {
+    //   componentName: 'ProductCard',
+    //   name: 'Product 1',
+    //   description: 'Description 1',
+    //   image: '/next.svg',
+    //   width: 100,
+    // },
     {
-      component: 'ProductCard',
-      props: {
-        name: 'Product 1',
-        description: 'Description 1',
-        image: '/next.svg',
-        width: 100,
-      },
+      componentName: 'Chip',
+      category: 'Fresh Produce',
     },
     {
-      component: 'Chip',
-      props: {
-        category: 'Fresh Produce',
-      },
+      componentName: 'Chip',
+      category: 'Beverage',
+    },
+    {
+      componentName: 'Chip',
+      category: 'Another category',
     },
   ];
 
   return (
     <div>
-      <Slider data={data} />
+      <DynamicComponent props={data[1]} />
+      {/* <Slider data={data} /> */}
     </div>
   );
 }
