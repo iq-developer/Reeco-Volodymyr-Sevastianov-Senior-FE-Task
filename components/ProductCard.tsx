@@ -4,20 +4,23 @@ interface ProductCardProps {
   name: string;
   description: string;
   image: string;
-  width: number;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   name,
   description,
   image,
-  width,
 }) => {
   return (
-    <div className="product-card">
-      <img src={image} alt={name} width={width} />
-      <h3>{name}</h3>
-      <p>{description}</p>
+    <div className="border border-slate-300 h-full relative">
+      <div className="w-48 h-48 flex justify-center items-center">
+        <img src={image} alt={name} height="180px" width="180px" />
+      </div>
+      <div className="p-4">
+        <h3 className="font-bold">{name}</h3>
+        <p>{description}</p>
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 h-7 bg-white"></div>
     </div>
   );
 };

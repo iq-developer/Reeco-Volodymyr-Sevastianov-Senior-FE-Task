@@ -5,10 +5,13 @@ interface ChipProps {
   color?: string;
 }
 
-const Chip: React.FC<ChipProps> = ({ category, color = 'slate' }) => {
+const Chip: React.FC<ChipProps> = ({
+  category,
+  color = 'bg-slate-200 text-slate-900',
+}) => {
   return (
     <div
-      className={`border bg-slate-200 border border-white font-bold text-slate-900 w-32 p-6 h-full flex items-center justify-center ${color}`}
+      className={`border w-48 text-2xl border-white font-bold p-6 h-full flex items-center justify-center ${color}`}
     >
       {category}
     </div>
