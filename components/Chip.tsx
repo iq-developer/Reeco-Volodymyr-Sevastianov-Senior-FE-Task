@@ -11,7 +11,7 @@ const Chip: React.FC<ChipProps> = ({
 }) => {
   return (
     <div
-      className={`border w-48 text-2xl border-white font-bold p-6 h-full flex items-center justify-center ${color}`}
+      className={`border w-64 text-2xl border-white font-bold p-6 h-full flex items-center justify-center ${color}`}
     >
       {category}
     </div>

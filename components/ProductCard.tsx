@@ -13,14 +13,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <div className="border border-slate-300 h-full relative">
-      <div className="w-48 h-48 flex justify-center items-center">
-        <img src={image} alt={name} height="180px" width="180px" />
+      <div className="w-64 h-48 flex justify-center items-center">
+        <img src={image} alt={name} height="200px" width="200px" />
       </div>
       <div className="p-4">
-        <h3 className="font-bold">{name}</h3>
+        <h3 className="font-bold text-xl mb-2">{name}</h3>
         <p>{description}</p>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-7 bg-white"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-4 bg-white"></div>
     </div>
   );
 };

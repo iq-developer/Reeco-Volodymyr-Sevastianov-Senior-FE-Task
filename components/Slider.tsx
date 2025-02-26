@@ -48,12 +48,12 @@ const Slider: React.FC<SliderProps> = ({
         }`}
         style={{
           transform: `translate${orientation === 'horizontal' ? 'X' : 'Y'}(-${
-            currentIndex * (moveByItem ? 192 : moveByPixels)
+            currentIndex * (moveByItem ? 256 : moveByPixels)
           }px)`,
         }}
       >
         {items.map((item, index) => (
-          <div key={item.id ?? index + 1} className="w-48 h-96">
+          <div key={item.id ?? index + 1} className="w-64 h-96">
             <DynamicComponent props={item} />
           </div>
         ))}
