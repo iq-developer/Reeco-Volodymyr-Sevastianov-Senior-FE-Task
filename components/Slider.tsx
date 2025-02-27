@@ -2,12 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import DynamicComponent from './DynamicComponent';
-
-interface Item {
-  componentName: string;
-  id: number;
-  [key: string]: any;
-}
+import { Item } from '../types/types';
 
 interface SliderProps {
   items: Item[];
@@ -91,7 +86,7 @@ const Slider: React.FC<SliderProps> = ({ items }) => {
           </div>
         ))}
       </div>
-      {currentIndex < items.length - 1 && (
+      {currentIndex < items.length - 1 && isMoveByItem && (
         <button
           title="Next"
           onClick={handleNext}
