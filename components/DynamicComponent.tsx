@@ -29,7 +29,7 @@ const DynamicComponent: React.FC<DynamicComponentProps> = ({ props }) => {
   // this part is
   if (!Component) {
     return (
-      <div className="border bg-slate-100 border border-white text-slate-900 w-32 p-6 h-full flex items-center justify-center">
+      <div className="bg-slate-100 border border-white text-slate-900 w-32 p-6 h-full flex items-center justify-center">
         Component not found
       </div>
     );

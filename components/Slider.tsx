@@ -3,21 +3,37 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import DynamicComponent from './DynamicComponent';
 
-interface SliderProps {
-  items: any[];
-  orientation?: 'horizontal' | 'vertical';
+interface Item {
+  componentName: string;
+  id: number;
+  [key: string]: any;
 }
 
-const Slider: React.FC<SliderProps> = ({
-  items,
-  orientation = 'horizontal',
-}) => {
+interface SliderProps {
+  items: Item[];
+}
+
+const Slider: React.FC<SliderProps> = ({ items }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [wrapperWidth, setWrapperWidth] = useState(0);
   const [moveDistance, setMoveDistance] = useState(0);
   const [isMoveByItem, setIsMoveByItem] = useState(true);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const handlePrev = useCallback(() => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prevIndex) => prevIndex - 1);
+      setDirection('prev');
+    }
+  }, [currentIndex]);
+
+  const handleNext = useCallback(() => {
+    if (currentIndex < items.length - 1 && isMoveByItem) {
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+      setDirection('next');
+    }
+  }, [currentIndex, items.length, isMoveByItem]);
 
   useEffect(() => {
     const updateWrapperWidth = () => {
@@ -49,53 +65,24 @@ const Slider: React.FC<SliderProps> = ({
       setIsMoveByItem(false);
       setMoveDistance(maxOffset);
     }
-
-    console.log('currentIndex:', currentIndex);
-    console.log('rest:', rest);
-    console.log('isMoveByItem:', isMoveByItem);
   }, [currentIndex, items.length, wrapperWidth, moveDistance]);
-
-  const handlePrev = useCallback(() => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prevIndex) => prevIndex - 1);
-      setDirection('prev');
-    }
-  }, [currentIndex]);
-
-  const handleNext = useCallback(() => {
-    if (currentIndex < items.length - 1 && isMoveByItem) {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
-      setDirection('next');
-    }
-  }, [currentIndex, items.length, isMoveByItem]);
 
   return (
     <div
-      id="wrapper"
       ref={wrapperRef}
-      className={`relative overflow-hidden  h-full border-2 border-blue-300 ${
-        orientation === 'horizontal' ? 'flex-row w-full' : 'flex-col'
-      }`}
+      className="relative overflow-hidden  h-full border border-blue-300"
     >
       {currentIndex > 0 && (
         <button
+          title="Previous"
           onClick={handlePrev}
-          className={`absolute  transform  opacity-30 cursor-pointer z-10 w-0 h-0  border-transparent border-r-black hover:opacity-50 ${
-            orientation === 'horizontal'
-              ? 'top-1/2 -translate-y-1/2 left-1 border-y-[80px] border-r-[40px]'
-              : 'top-1 border-x-[40px] border-t-[20px]'
-          }`}
+          className="absolute top-1/2 -translate-y-1/2 left-1 border-y-[80px] border-r-[40px] transform  opacity-30 cursor-pointer z-10 w-0 h-0  border-transparent border-r-black hover:opacity-50"
         ></button>
       )}
       <div
-        id="slider"
-        className={`border-2 border-orange-300 flex transition-transform duration-300 ease-in-out ${
-          orientation === 'horizontal' ? 'flex-row' : 'flex-col'
-        }`}
+        className="flex transition-transform duration-300 ease-in-out "
         style={{
-          transform: `translate${
-            orientation === 'horizontal' ? 'X' : 'Y'
-          }(-${moveDistance}px)`,
+          transform: `translateX(-${moveDistance}px)`,
         }}
       >
         {items.map((item, index) => (
@@ -106,6 +93,7 @@ const Slider: React.FC<SliderProps> = ({
       </div>
       {currentIndex < items.length - 1 && (
         <button
+          title="Next"
           onClick={handleNext}
           className="absolute top-1/2 transform -translate-y-1/2 opacity-30 cursor-pointer right-1 z-10 w-0 h-0 border-y-[80px] border-l-[40px] border-transparent border-l-black hover:opacity-50"
         ></button>

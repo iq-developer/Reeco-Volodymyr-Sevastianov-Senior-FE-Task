@@ -33,7 +33,7 @@ export default function Home() {
       id: 5,
     },
     // {
-    //   broken: 'something goes wrong',
+    //   broken: 'example of broken object',
     // },
     {
       componentName: 'ProductCard',
