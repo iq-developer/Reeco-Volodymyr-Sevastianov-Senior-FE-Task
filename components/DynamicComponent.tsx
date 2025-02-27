@@ -12,8 +12,6 @@ const DynamicComponent: React.FC<DynamicComponentProps> = ({ props }) => {
     null
   );
 
-  console.log('props:', props);
-
   useEffect(() => {
     const loadComponent = async () => {
       try {

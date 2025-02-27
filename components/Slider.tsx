@@ -1,22 +1,37 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import DynamicComponent from './DynamicComponent';
 
 interface SliderProps {
   items: any[];
-  moveByPixels?: number;
-  moveByItem?: boolean;
   orientation?: 'horizontal' | 'vertical';
 }
 
 const Slider: React.FC<SliderProps> = ({
   items,
-  moveByPixels = 100,
-  moveByItem = true,
   orientation = 'horizontal',
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [wrapperWidth, setWrapperWidth] = useState(0);
+  // const [moveByItem, setMoveByItem] = useState(true);
+  // const [moveByPixels, setMoveByPixels] = useState(100);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateWrapperWidth = () => {
+      if (wrapperRef.current) {
+        setWrapperWidth(wrapperRef.current.offsetWidth);
+      }
+    };
+
+    updateWrapperWidth();
+    window.addEventListener('resize', updateWrapperWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateWrapperWidth);
+    };
+  }, []);
 
   const handlePrev = () => {
     if (currentIndex > 0) {
@@ -26,13 +41,38 @@ const Slider: React.FC<SliderProps> = ({
 
   const handleNext = () => {
     if (currentIndex < items.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+      if (nextOffset > maxOffset) {
+        setCurrentIndex(
+          currentIndex +
+            Math.ceil((maxOffset - currentIndex * itemWidth) / itemWidth)
+        );
+      } else {
+        setCurrentIndex(nextIndex);
+      }
     }
   };
+  const itemWidth = 256;
+  const nextIndex = currentIndex + 1;
+  const sliderWidth = items.length * itemWidth;
+  const maxOffset = sliderWidth - wrapperWidth;
+  const nextOffset = nextIndex * itemWidth;
+  const rest = maxOffset - nextOffset;
+  const moveByItem = rest > itemWidth;
+  const moveDistance = currentIndex * itemWidth;
+  //const moveDistance = moveByItem ? currentIndex * itemWidth : 50;
+
+  console.log('> wrapperWidth:', wrapperWidth);
+  console.log('> sliderWidth:', sliderWidth);
+  console.log('maxOffset:', maxOffset);
+  console.log('nextOffset:', nextOffset);
+  console.log('rest:', rest);
+  console.log('moveByItem:', moveByItem);
 
   return (
     <div
-      className={`relative overflow-hidden w-full h-full  border border-blue-300  ${
+      id="wrapper"
+      ref={wrapperRef}
+      className={`relative overflow-hidden w-full h-full border-2 border-blue-300 ${
         orientation === 'horizontal' ? 'flex-row' : 'flex-col'
       }`}
     >
@@ -43,13 +83,14 @@ const Slider: React.FC<SliderProps> = ({
         ></button>
       )}
       <div
-        className={`flex transition-transform duration-300 ease-in-out  ${
+        id="slider"
+        className={`border-2 border-orange-300 flex transition-transform duration-300 ease-in-out ${
           orientation === 'horizontal' ? 'flex-row' : 'flex-col'
         }`}
         style={{
-          transform: `translate${orientation === 'horizontal' ? 'X' : 'Y'}(-${
-            currentIndex * (moveByItem ? 256 : moveByPixels)
-          }px)`,
+          transform: `translate${
+            orientation === 'horizontal' ? 'X' : 'Y'
+          }(-${moveDistance}px)`,
         }}
       >
         {items.map((item, index) => (
