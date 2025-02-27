@@ -15,6 +15,8 @@ const Slider: React.FC<SliderProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [wrapperWidth, setWrapperWidth] = useState(0);
   const [moveDistance, setMoveDistance] = useState(0);
+  const [isMoveByItem, setIsMoveByItem] = useState(true);
+  const [direction, setDirection] = useState<'next' | 'prev'>('next');
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -26,10 +28,8 @@ const Slider: React.FC<SliderProps> = ({
         }
       }
     };
-
     updateWrapperWidth();
     window.addEventListener('resize', updateWrapperWidth);
-
     return () => {
       window.removeEventListener('resize', updateWrapperWidth);
     };
@@ -41,35 +41,50 @@ const Slider: React.FC<SliderProps> = ({
     const maxOffset = Math.max(sliderWidth - wrapperWidth, 0);
     const offset = currentIndex * itemWidth;
     const rest = maxOffset - offset;
-    const isMoveByItem = rest > 0;
-    const newMoveDistance = isMoveByItem ? currentIndex * itemWidth : maxOffset;
-    setMoveDistance(newMoveDistance);
+
+    if (rest > 0 || direction === 'prev') {
+      setIsMoveByItem(true);
+      setMoveDistance(currentIndex * itemWidth);
+    } else {
+      setIsMoveByItem(false);
+      setMoveDistance(maxOffset);
+    }
+
+    console.log('currentIndex:', currentIndex);
+    console.log('rest:', rest);
+    console.log('isMoveByItem:', isMoveByItem);
   }, [currentIndex, items.length, wrapperWidth, moveDistance]);
 
   const handlePrev = useCallback(() => {
     if (currentIndex > 0) {
       setCurrentIndex((prevIndex) => prevIndex - 1);
+      setDirection('prev');
     }
   }, [currentIndex]);
 
   const handleNext = useCallback(() => {
-    if (currentIndex < items.length - 1) {
+    if (currentIndex < items.length - 1 && isMoveByItem) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
+      setDirection('next');
     }
-  }, [currentIndex, items.length]);
+  }, [currentIndex, items.length, isMoveByItem]);
 
   return (
     <div
       id="wrapper"
       ref={wrapperRef}
-      className={`relative overflow-hidden w-full h-full border-2 border-blue-300 ${
-        orientation === 'horizontal' ? 'flex-row' : 'flex-col'
+      className={`relative overflow-hidden  h-full border-2 border-blue-300 ${
+        orientation === 'horizontal' ? 'flex-row w-full' : 'flex-col'
       }`}
     >
       {currentIndex > 0 && (
         <button
           onClick={handlePrev}
-          className="absolute top-1/2 transform -translate-y-1/2 opacity-30 cursor-pointer left-1 z-10 w-0 h-0 border-y-[40px] border-r-[20px] border-transparent border-r-black hover:opacity-50"
+          className={`absolute  transform  opacity-30 cursor-pointer z-10 w-0 h-0  border-transparent border-r-black hover:opacity-50 ${
+            orientation === 'horizontal'
+              ? 'top-1/2 -translate-y-1/2 left-1 border-y-[80px] border-r-[40px]'
+              : 'top-1 border-x-[40px] border-t-[20px]'
+          }`}
         ></button>
       )}
       <div
@@ -92,7 +107,7 @@ const Slider: React.FC<SliderProps> = ({
       {currentIndex < items.length - 1 && (
         <button
           onClick={handleNext}
-          className="absolute top-1/2 transform -translate-y-1/2 opacity-30 cursor-pointer right-1 z-10 w-0 h-0 border-y-[40px] border-l-[20px] border-transparent border-l-black hover:opacity-50"
+          className="absolute top-1/2 transform -translate-y-1/2 opacity-30 cursor-pointer right-1 z-10 w-0 h-0 border-y-[80px] border-l-[40px] border-transparent border-l-black hover:opacity-50"
         ></button>
       )}
     </div>
