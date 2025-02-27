@@ -1,11 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-
-interface ProductCardProps {
-  name: string;
-  description: string;
-  image: string;
-}
+import { ProductCardProps } from '../types/types';
 
 const ProductCard: React.FC<ProductCardProps> = ({
   name,

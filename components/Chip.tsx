@@ -1,9 +1,5 @@
 import React from 'react';
-
-interface ChipProps {
-  category: string;
-  color?: string;
-}
+import { ChipProps } from '../types/types';
 
 const Chip: React.FC<ChipProps> = ({
   category,

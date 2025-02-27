@@ -80,8 +80,8 @@ const Slider: React.FC<SliderProps> = ({ items }) => {
           transform: `translateX(-${moveDistance}px)`,
         }}
       >
-        {items.map((item, index) => (
-          <div key={item.id ?? index + 1} className="w-64 h-96">
+        {items.map((item) => (
+          <div key={item.id} className="w-64 h-96">
             <DynamicComponent props={item} />
           </div>
         ))}
