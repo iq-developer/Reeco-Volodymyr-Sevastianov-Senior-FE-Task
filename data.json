@@ -2,31 +2,31 @@
   {
     "componentName": "Chip",
     "category": "Fresh Produce",
-    "color": "bg-cyan-200 text-cyan-900",
+    "color": "cyan",
     "id": 1
   },
   {
     "componentName": "Chip",
     "category": "Beverage",
-    "color": "bg-green-200 text-green-900",
+    "color": "green",
     "id": 2
   },
   {
     "componentName": "Chip",
     "category": "Fruits",
-    "color": "bg-rose-200 text-rose-900",
+    "color": "rose",
     "id": 3
   },
   {
     "componentName": "Chip",
     "category": "Vegetables",
-    "color": "bg-orange-200 text-orange-900",
+    "color": "orange",
     "id": 4
   },
   {
     "componentName": "Chip",
     "category": "Soap",
-    "color": "bg-blue-200 text-blue-900",
+    "color": "blue",
     "id": 5
   },
   {

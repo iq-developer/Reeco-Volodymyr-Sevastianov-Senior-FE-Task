@@ -11,7 +11,7 @@ export interface ProductCardProps {
 
 export interface ChipProps {
   category: string;
-  color?: string;
+  color: string;
 }
 
 export type Item = Component & (ProductCardProps | ChipProps);
