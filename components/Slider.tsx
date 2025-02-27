@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import DynamicComponent from './DynamicComponent';
 
 interface SliderProps {
@@ -14,14 +14,16 @@ const Slider: React.FC<SliderProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [wrapperWidth, setWrapperWidth] = useState(0);
-  // const [moveByItem, setMoveByItem] = useState(true);
-  // const [moveByPixels, setMoveByPixels] = useState(100);
+  const [moveDistance, setMoveDistance] = useState(0);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateWrapperWidth = () => {
       if (wrapperRef.current) {
-        setWrapperWidth(wrapperRef.current.offsetWidth);
+        const newWidth = wrapperRef.current.offsetWidth;
+        if (newWidth !== wrapperWidth) {
+          setWrapperWidth(newWidth);
+        }
       }
     };
 
@@ -31,42 +33,30 @@ const Slider: React.FC<SliderProps> = ({
     return () => {
       window.removeEventListener('resize', updateWrapperWidth);
     };
-  }, []);
+  }, [wrapperWidth]);
 
-  const handlePrev = () => {
+  useEffect(() => {
+    const itemWidth = 256;
+    const sliderWidth = items.length * itemWidth;
+    const maxOffset = Math.max(sliderWidth - wrapperWidth, 0);
+    const offset = currentIndex * itemWidth;
+    const rest = maxOffset - offset;
+    const isMoveByItem = rest > 0;
+    const newMoveDistance = isMoveByItem ? currentIndex * itemWidth : maxOffset;
+    setMoveDistance(newMoveDistance);
+  }, [currentIndex, items.length, wrapperWidth, moveDistance]);
+
+  const handlePrev = useCallback(() => {
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+      setCurrentIndex((prevIndex) => prevIndex - 1);
     }
-  };
+  }, [currentIndex]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentIndex < items.length - 1) {
-      if (nextOffset > maxOffset) {
-        setCurrentIndex(
-          currentIndex +
-            Math.ceil((maxOffset - currentIndex * itemWidth) / itemWidth)
-        );
-      } else {
-        setCurrentIndex(nextIndex);
-      }
+      setCurrentIndex((prevIndex) => prevIndex + 1);
     }
-  };
-  const itemWidth = 256;
-  const nextIndex = currentIndex + 1;
-  const sliderWidth = items.length * itemWidth;
-  const maxOffset = sliderWidth - wrapperWidth;
-  const nextOffset = nextIndex * itemWidth;
-  const rest = maxOffset - nextOffset;
-  const moveByItem = rest > itemWidth;
-  const moveDistance = currentIndex * itemWidth;
-  //const moveDistance = moveByItem ? currentIndex * itemWidth : 50;
-
-  console.log('> wrapperWidth:', wrapperWidth);
-  console.log('> sliderWidth:', sliderWidth);
-  console.log('maxOffset:', maxOffset);
-  console.log('nextOffset:', nextOffset);
-  console.log('rest:', rest);
-  console.log('moveByItem:', moveByItem);
+  }, [currentIndex, items.length]);
 
   return (
     <div
