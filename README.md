@@ -1,18 +1,26 @@
 # Reeco - Volodymyr Sevastianov - Senior FE Task
 
-## Slider Component
+## Slider Component 1.0
 
 Component that takes a list of objects and renders each one.
-Slider supports “infinite” types of objects, in this task I use 2 as examples.
+Slider supports “infinite” types of objects by DynamicComponent. In this task I use 2 (Product card and Chip) as examples.
 
-1. Navigation Arrows – when the slider is at the beginning or the end, show only the opposite arrow. Otherwise, show both.
+1. Navigation Arrows – when the slider is at the beginning or the end, only the opposite arrow is diplayed. Otherwise, both are displayed.
 2. Support 2 slider movements:
    a. Move by item.
    b. Move by “X” pixels - currently only used when last card displays partially, then click on "Next" button moves it for the distance to show it fully.
+
+   To develop advanced "Move by “X” pixels" feature, more details needed (what triggers this feature and how it should work). So it can be implemented in next version of the slider.
+
 3. Support generic list of objectsh:
    a. Product card – a box displaying the product name, description and image.
    b. Chip – A chip contains the name of category: Fresh Produce, Beverage, etc.
 4. Orientation – horizontal layout.
+
+Additional features:
+
+- Responsiveness
+- Display many items
 
 ## Run project locally
 

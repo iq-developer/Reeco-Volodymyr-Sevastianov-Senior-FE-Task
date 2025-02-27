@@ -60,7 +60,7 @@ const Slider: React.FC<SliderProps> = ({ items }) => {
       setIsMoveByItem(false);
       setMoveDistance(maxOffset);
     }
-  }, [currentIndex, items.length, wrapperWidth, moveDistance]);
+  }, [currentIndex, items.length, wrapperWidth, moveDistance, direction]);
 
   return (
     <div
