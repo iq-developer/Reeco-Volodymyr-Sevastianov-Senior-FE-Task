@@ -1,9 +1,10 @@
 # Reeco - Volodymyr Sevastianov - Senior FE Task
 
-## Slider Component 1.0
+## Slider Component 1.1 (React, Next, Typescript, Tailwind)
 
 Component that takes a list of objects and renders each one.
-Slider supports “infinite” types of objects by DynamicComponent. In this task I use 2 (Product card and Chip) as examples.
+Slider supports “infinite” types of objects by DynamicComponent.
+In this task I use 2 (Product card and Chip) as examples.
 
 1. Navigation Arrows – when the slider is at the beginning or the end, only the opposite arrow is diplayed. Otherwise, both are displayed.
 2. Support 2 slider movements:
@@ -15,12 +16,14 @@ Slider supports “infinite” types of objects by DynamicComponent. In this tas
 3. Support generic list of objectsh:
    a. Product card – a box displaying the product name, description and image.
    b. Chip – A chip contains the name of category: Fresh Produce, Beverage, etc.
-4. Orientation – horizontal layout.
+4. Support switching between vertical and horizontal layout via prop.
 
 Additional features:
 
-- Responsiveness
-- Display many items
+- Responsiveness (even full width for horisontal orientation)
+- Display many items (For horisontal orientation)
+- Error handling (if some component object missed properties)
+- Dark/Light theme support
 
 ## Run project locally
 
