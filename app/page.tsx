@@ -13,8 +13,19 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="p-2 flex justify-center">
-      <Slider items={items} />
-    </div>
+    <>
+      <div className="p-2 flex justify-center">
+        <Slider items={items} />
+      </div>
+      <div className=" flex justify-center">
+        <div className="w-64 m-16">
+          <Slider items={items} />
+        </div>
+
+        <div className="w-64 m-16 h-96">
+          <Slider items={items} orientation="vertical" />
+        </div>
+      </div>
+    </>
   );
 }

@@ -8,7 +8,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   image,
 }) => {
   return (
-    <div className="border border-slate-300 h-full relative">
+    <div className="border border-slate-300 h-full relative bg-white text-slate-900">
       <div className="w-64 h-48 flex justify-center items-center">
         <Image src={image} alt={name} height={200} width={200} priority />
       </div>
